@@ -12,9 +12,22 @@ class Cart
         
     }
 
+    /**
+     * getCart()
+     * Fonction retournant le panier
+     */
+    public function getCart()
+    {
+        return $this->requestStack->getSession()->get('cart');
+    }
+
+    /**
+     * add()
+     * Fonction permettant l'ajout d'un produit au panier
+     */
     public function add(Product $product)
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         // Ajouter une quantity + 1  à mon produit
         if(!empty($cart[$product->getId()])) {
@@ -33,9 +46,13 @@ class Cart
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
+    /**
+     * decrease()
+     * Fonction permettant la suppression d'une quantité d'un produit au panier
+     */
     public function decrease($id)
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         if ($cart[$id]['qty'] > 1) {
             $cart[$id]['qty'] = $cart[$id]['qty'] - 1;
@@ -46,9 +63,13 @@ class Cart
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
+    /**
+     * fullQuantity()
+     * Fonction retournant le nombre total de produits au panier
+     */
     public function fullQuantity()
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         $quantity = 0;
 
@@ -63,9 +84,13 @@ class Cart
         return $quantity;
     }
 
+    /**
+     * getTotalWt()
+     * Fonction retournant le prix total des produits au panier
+     */
     public function getTotalWt()
     {
-        $cart = $this->requestStack->getSession()->get('cart');
+        $cart = $this->getCart();
 
         $price = 0;
 
@@ -80,13 +105,12 @@ class Cart
         return $price;
     }
 
+    /**
+     * remove()
+     * Fonction permettant de supprimer totalement le contenu du panier
+     */
     public function remove()
     {
         return $this->requestStack->getSession()->remove('cart');
-    }
-
-    public function getCart()
-    {
-        return $this->requestStack->getSession()->get('cart');
     }
 }
