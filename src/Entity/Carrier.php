@@ -20,6 +20,12 @@ class Carrier
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    public function __toString()
+    {
+        $price = sprintf('%s €', number_format($this->getPrice(), 2, ','));
+        return $this->getName().'<br>'.$price.'<br>'.$this->getDescription();
+    }
+
     #[ORM\Column]
     private ?float $price = null;
 

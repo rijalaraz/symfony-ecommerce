@@ -2,6 +2,7 @@
 
 namespace App\Controller\Account;
 
+use App\Classe\Cart;
 use App\Entity\Address;
 use App\Form\AddressUserType;
 use App\Repository\AddressRepository;
@@ -44,7 +45,7 @@ class AddressController extends AbstractController
     }
 
     #[Route('/account/addresses/add/{id}', name: 'app_account_address_form', defaults: [ 'id' => null ])]
-    public function form(Request $request, $id, AddressRepository $addressRepository): Response
+    public function form(Request $request, $id, AddressRepository $addressRepository, Cart $cart): Response
     {
         if ($id) {
             /**
@@ -71,6 +72,10 @@ class AddressController extends AbstractController
                 'success',
                 'Votre adresse est correctement sauvegardée'
             );
+
+            if ($cart->fullQuantity() > 0) {
+                return $this->redirectToRoute('app_order');
+            }
 
             return $this->redirectToRoute('app_account_addresses');
         }
