@@ -7,10 +7,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Cart
 {
-    public function __construct(private RequestStack $requestStack)
-    {
-        
-    }
+    public function __construct(
+        private RequestStack $requestStack
+    ) {}
 
     /**
      * getCart()
@@ -99,7 +98,11 @@ class Cart
         }
 
         foreach ($cart as $product) {
-            $price += $product['object']->getPriceWt() * $product['qty'];
+            /**
+             * @var Product $productObj
+             */
+            $productObj = $product['object'];
+            $price += $productObj->getPriceWt() * $product['qty'];
         }
 
         return $price;

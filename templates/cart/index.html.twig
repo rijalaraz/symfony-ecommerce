@@ -15,7 +15,7 @@
                             <span class="d-block small">Prix unitaire : {{ product.object.pricewt|price }}</span>
                         </div>
                         <div class="col-md-2 text-right">
-                            <a href="{{ path('app_cart_decrease', { id: product.object.id } ) }}">-</a> <span class="badge text-bg-secondary">x{{ product.qty }}</span> <a href="{{ path('app_cart_add', { id : product.object.id } ) }}">+</a>
+                            <a class="text-decoration-none" href="{{ path('app_cart_decrease', { id: product.object.id } ) }}">-</a> <span class="badge text-bg-secondary">x{{ product.qty }}</span> <a class="text-decoration-none" href="{{ path('app_cart_add', { id : product.object.id } ) }}">+</a>
                         </div>
                         <div class="col-md-2">
                             <strong>{{ (product.qty * product.object.pricewt)|price }}</strong>
